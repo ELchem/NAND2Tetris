@@ -1,0 +1,70 @@
+//Mux(a = outb?, b = in[?], sel = load, out = outa?);
+//    DFF(in = outa?, out = out[?], out = outb?);
+//
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/03/a/Register.hdl
+
+/**
+ * 16-bit register:
+ * If load[t] == 1 then out[t+1] = in[t]
+ * else out does not change
+ */
+
+CHIP Register {
+    IN in[16], load;
+    OUT out[16];
+
+    PARTS:
+    // Put your code here:
+//*
+    Mux(a = outb0, b = in[0], sel = load, out = outa0);
+    DFF(in = outa0, out = out[0], out = outb0);
+
+    Mux(a = outb1, b = in[1], sel = load, out = outa1);
+    DFF(in = outa1, out = out[1], out = outb1);
+
+    Mux(a = outb2, b = in[2], sel = load, out = outa2);
+    DFF(in = outa2, out = out[2], out = outb2);
+
+    Mux(a = outb3, b = in[3], sel = load, out = outa3);
+    DFF(in = outa3, out = out[3], out = outb3);
+
+    Mux(a = outb4, b = in[4], sel = load, out = outa4);
+    DFF(in = outa4, out = out[4], out = outb4);
+
+    Mux(a = outb5, b = in[5], sel = load, out = outa5);
+    DFF(in = outa5, out = out[5], out = outb5);
+
+    Mux(a = outb6, b = in[6], sel = load, out = outa6);
+    DFF(in = outa6, out = out[6], out = outb6);
+
+    Mux(a = outb7, b = in[7], sel = load, out = outa7);
+    DFF(in = outa7, out = out[7], out = outb7);
+
+    Mux(a = outb8, b = in[8], sel = load, out = outa8);
+    DFF(in = outa8, out = out[8], out = outb8);
+
+    Mux(a = outb9, b = in[9], sel = load, out = outa9);
+    DFF(in = outa9, out = out[9], out = outb9);
+
+    Mux(a = outb10, b = in[10], sel = load, out = outa10);
+    DFF(in = outa10, out = out[10], out = outb10);
+
+    Mux(a = outb11, b = in[11], sel = load, out = outa11);
+    DFF(in = outa11, out = out[11], out = outb11);
+
+    Mux(a = outb12, b = in[12], sel = load, out = outa12);
+    DFF(in = outa12, out = out[12], out = outb12);
+
+    Mux(a = outb13, b = in[13], sel = load, out = outa13);
+    DFF(in = outa13, out = out[13], out = outb13);
+
+    Mux(a = outb14, b = in[14], sel = load, out = outa14);
+    DFF(in = outa14, out = out[14], out = outb14);
+
+    Mux(a = outb15, b = in[15], sel = load, out = outa15);
+    DFF(in = outa15, out = out[15], out = outb15);
+
+}

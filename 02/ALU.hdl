@@ -1,0 +1,544 @@
+//Not(in = outprime?, out = notoutprime?);
+//    Mux(a = outprime?, b = notoutprime?, sel = no, out = out[?]);
+//    Mux(a = outprime?, b = notoutprime?, sel = no, out = outval?);
+//
+ 
+//Mux(a = andout?, b = addout?, sel = f, out = outprime?);
+//          
+//Or(a = x?b, b = y?b, out = xd?);
+//    Or(a = y?b, b = c%, out = yd?);
+//    Or(a = x?b, b = c%, out =zd?);
+//    And(a = c%, b = xd?, out = cx?);
+//    And(a = x?b, b = yd?, out = ay?);    
+//    And(a = y?b, b = zd?, out = bz?); 
+//    Or(a = cx?, b = ay?, out = ortemp?);
+//    Or(a = ortemp?, b = bz?, out = c?);
+//
+//    Xor(a = x?b, b = y?b, out = sum1a?);
+//    Xor(a = sum1a?, b = c%, out = addout?);   
+//    //And
+//    And(a = x?b, b = y?b, out = andout?);
+//          
+ 
+//    And(a = notzx, b = x[?], out = x?);
+//    And(a = notzy, b = y[?], out = y?);
+//
+//    Xor(a = x?, b = nx, out = x?b);
+//    Xor(a = y?, b = ny, out = y?b);
+//
+//          
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/02/ALU.hdl
+
+/**
+ * The ALU (Arithmetic Logic Unit).
+ * Computes one of the following functions:
+ * x+y, x-y, y-x, 0, 1, -1, x, y, -x, -y, !x, !y,
+ * x+1, y+1, x-1, y-1, x&y, x|y on two 16-bit inputs, 
+ * according to 6 input bits denoted zx,nx,zy,ny,f,no.
+ * In addition, the ALU computes two 1-bit outputs:
+ * if the ALU output == 0, zr is set to 1; otherwise zr is set to 0;
+ * if the ALU output < 0, ng is set to 1; otherwise ng is set to 0.
+ */
+
+// Implementation: the ALU logic manipulates the x and y inputs
+// and operates on the resulting values, as follows:
+// if (zx == 1) set x = 0        // 16-bit constant
+// if (nx == 1) set x = !x       // bitwise not
+// if (zy == 1) set y = 0        // 16-bit constant
+// if (ny == 1) set y = !y       // bitwise not
+// if (f == 1)  set out = x + y  // integer 2's complement addition
+// if (f == 0)  set out = x & y  // bitwise and
+// if (no == 1) set out = !out   // bitwise not
+// if (out == 0) set zr = 1
+// if (out < 0) set ng = 1
+
+CHIP ALU {
+    IN  
+        x[16], y[16],  // 16-bit inputs        
+        zx, // zero the x input?
+        nx, // negate the x input?
+        zy, // zero the y input?
+        ny, // negate the y input?
+        f,  // compute out = x + y (if 1) or x & y (if 0)
+        no; // negate the out output?
+
+    OUT 
+        out[16], // 16-bit output
+        zr, // 1 if (out == 0), 0 otherwise
+        ng; // 1 if (out < 0),  0 otherwise
+
+    PARTS:
+    // Put you code here:
+    //Not x and y (x = zx) for zx to produce 16-bit constant 0
+    //Xor(x[16],nx) for nx to produce bitwise not, operates on result of zx function
+
+    Not(in = zx, out = notzx);
+    Not(in = zy, out = notzy);
+
+//***
+
+    And(a = notzx, b = x[0], out = x0);
+    And(a = notzy, b = y[0], out = y0);
+
+    Xor(a = x0, b = nx, out = x0b);
+    Xor(a = y0, b = ny, out = y0b);
+
+          
+
+    And(a = notzx, b = x[1], out = x1);
+    And(a = notzy, b = y[1], out = y1);
+
+    Xor(a = x1, b = nx, out = x1b);
+    Xor(a = y1, b = ny, out = y1b);
+
+          
+
+    And(a = notzx, b = x[2], out = x2);
+    And(a = notzy, b = y[2], out = y2);
+
+    Xor(a = x2, b = nx, out = x2b);
+    Xor(a = y2, b = ny, out = y2b);
+
+          
+
+    And(a = notzx, b = x[3], out = x3);
+    And(a = notzy, b = y[3], out = y3);
+
+    Xor(a = x3, b = nx, out = x3b);
+    Xor(a = y3, b = ny, out = y3b);
+
+          
+
+    And(a = notzx, b = x[4], out = x4);
+    And(a = notzy, b = y[4], out = y4);
+
+    Xor(a = x4, b = nx, out = x4b);
+    Xor(a = y4, b = ny, out = y4b);
+
+          
+
+    And(a = notzx, b = x[5], out = x5);
+    And(a = notzy, b = y[5], out = y5);
+
+    Xor(a = x5, b = nx, out = x5b);
+    Xor(a = y5, b = ny, out = y5b);
+
+          
+
+    And(a = notzx, b = x[6], out = x6);
+    And(a = notzy, b = y[6], out = y6);
+
+    Xor(a = x6, b = nx, out = x6b);
+    Xor(a = y6, b = ny, out = y6b);
+
+          
+
+    And(a = notzx, b = x[7], out = x7);
+    And(a = notzy, b = y[7], out = y7);
+
+    Xor(a = x7, b = nx, out = x7b);
+    Xor(a = y7, b = ny, out = y7b);
+
+          
+
+    And(a = notzx, b = x[8], out = x8);
+    And(a = notzy, b = y[8], out = y8);
+
+    Xor(a = x8, b = nx, out = x8b);
+    Xor(a = y8, b = ny, out = y8b);
+
+          
+
+    And(a = notzx, b = x[9], out = x9);
+    And(a = notzy, b = y[9], out = y9);
+
+    Xor(a = x9, b = nx, out = x9b);
+    Xor(a = y9, b = ny, out = y9b);
+
+          
+
+    And(a = notzx, b = x[10], out = x10);
+    And(a = notzy, b = y[10], out = y10);
+
+    Xor(a = x10, b = nx, out = x10b);
+    Xor(a = y10, b = ny, out = y10b);
+
+          
+
+    And(a = notzx, b = x[11], out = x11);
+    And(a = notzy, b = y[11], out = y11);
+
+    Xor(a = x11, b = nx, out = x11b);
+    Xor(a = y11, b = ny, out = y11b);
+
+          
+
+    And(a = notzx, b = x[12], out = x12);
+    And(a = notzy, b = y[12], out = y12);
+
+    Xor(a = x12, b = nx, out = x12b);
+    Xor(a = y12, b = ny, out = y12b);
+
+          
+
+    And(a = notzx, b = x[13], out = x13);
+    And(a = notzy, b = y[13], out = y13);
+
+    Xor(a = x13, b = nx, out = x13b);
+    Xor(a = y13, b = ny, out = y13b);
+
+          
+
+    And(a = notzx, b = x[14], out = x14);
+    And(a = notzy, b = y[14], out = y14);
+
+    Xor(a = x14, b = nx, out = x14b);
+    Xor(a = y14, b = ny, out = y14b);
+
+          
+
+    And(a = notzx, b = x[15], out = x15);
+    And(a = notzy, b = y[15], out = y15);
+
+    Xor(a = x15, b = nx, out = x15b);
+    Xor(a = y15, b = ny, out = y15b);
+
+    //Addition
+    And(a = x0b, b = y0b, out = c0);
+    Xor(a = x0b, b = y0b, out = addout0);
+    And(a = x0b, b = y0b, out = andout0);
+    // Put your code here:
+//****
+    Or(a = x1b, b = y1b, out = xd1);
+    Or(a = y1b, b = c0, out = yd1);
+    Or(a = x1b, b = c0, out =zd1);
+    And(a = c0, b = xd1, out = cx1);
+    And(a = x1b, b = yd1, out = ay1);    
+    And(a = y1b, b = zd1, out = bz1); 
+    Or(a = cx1, b = ay1, out = ortemp1);
+    Or(a = ortemp1, b = bz1, out = c1);
+
+    Xor(a = x1b, b = y1b, out = sum1a1);
+    Xor(a = sum1a1, b = c0, out = addout1);   
+    //And
+    And(a = x1b, b = y1b, out = andout1);
+          
+    Or(a = x2b, b = y2b, out = xd2);
+    Or(a = y2b, b = c1, out = yd2);
+    Or(a = x2b, b = c1, out =zd2);
+    And(a = c1, b = xd2, out = cx2);
+    And(a = x2b, b = yd2, out = ay2);    
+    And(a = y2b, b = zd2, out = bz2); 
+    Or(a = cx2, b = ay2, out = ortemp2);
+    Or(a = ortemp2, b = bz2, out = c2);
+
+    Xor(a = x2b, b = y2b, out = sum1a2);
+    Xor(a = sum1a2, b = c1, out = addout2);   
+    //And
+    And(a = x2b, b = y2b, out = andout2);
+          
+    Or(a = x3b, b = y3b, out = xd3);
+    Or(a = y3b, b = c2, out = yd3);
+    Or(a = x3b, b = c2, out =zd3);
+    And(a = c2, b = xd3, out = cx3);
+    And(a = x3b, b = yd3, out = ay3);    
+    And(a = y3b, b = zd3, out = bz3); 
+    Or(a = cx3, b = ay3, out = ortemp3);
+    Or(a = ortemp3, b = bz3, out = c3);
+
+    Xor(a = x3b, b = y3b, out = sum1a3);
+    Xor(a = sum1a3, b = c2, out = addout3);   
+    //And
+    And(a = x3b, b = y3b, out = andout3);
+          
+    Or(a = x4b, b = y4b, out = xd4);
+    Or(a = y4b, b = c3, out = yd4);
+    Or(a = x4b, b = c3, out =zd4);
+    And(a = c3, b = xd4, out = cx4);
+    And(a = x4b, b = yd4, out = ay4);    
+    And(a = y4b, b = zd4, out = bz4); 
+    Or(a = cx4, b = ay4, out = ortemp4);
+    Or(a = ortemp4, b = bz4, out = c4);
+
+    Xor(a = x4b, b = y4b, out = sum1a4);
+    Xor(a = sum1a4, b = c3, out = addout4);   
+    //And
+    And(a = x4b, b = y4b, out = andout4);
+          
+    Or(a = x5b, b = y5b, out = xd5);
+    Or(a = y5b, b = c4, out = yd5);
+    Or(a = x5b, b = c4, out =zd5);
+    And(a = c4, b = xd5, out = cx5);
+    And(a = x5b, b = yd5, out = ay5);    
+    And(a = y5b, b = zd5, out = bz5); 
+    Or(a = cx5, b = ay5, out = ortemp5);
+    Or(a = ortemp5, b = bz5, out = c5);
+
+    Xor(a = x5b, b = y5b, out = sum1a5);
+    Xor(a = sum1a5, b = c4, out = addout5);   
+    //And
+    And(a = x5b, b = y5b, out = andout5);
+          
+    Or(a = x6b, b = y6b, out = xd6);
+    Or(a = y6b, b = c5, out = yd6);
+    Or(a = x6b, b = c5, out =zd6);
+    And(a = c5, b = xd6, out = cx6);
+    And(a = x6b, b = yd6, out = ay6);    
+    And(a = y6b, b = zd6, out = bz6); 
+    Or(a = cx6, b = ay6, out = ortemp6);
+    Or(a = ortemp6, b = bz6, out = c6);
+
+    Xor(a = x6b, b = y6b, out = sum1a6);
+    Xor(a = sum1a6, b = c5, out = addout6);   
+    //And
+    And(a = x6b, b = y6b, out = andout6);
+          
+    Or(a = x7b, b = y7b, out = xd7);
+    Or(a = y7b, b = c6, out = yd7);
+    Or(a = x7b, b = c6, out =zd7);
+    And(a = c6, b = xd7, out = cx7);
+    And(a = x7b, b = yd7, out = ay7);    
+    And(a = y7b, b = zd7, out = bz7); 
+    Or(a = cx7, b = ay7, out = ortemp7);
+    Or(a = ortemp7, b = bz7, out = c7);
+
+    Xor(a = x7b, b = y7b, out = sum1a7);
+    Xor(a = sum1a7, b = c6, out = addout7);   
+    //And
+    And(a = x7b, b = y7b, out = andout7);
+          
+    Or(a = x8b, b = y8b, out = xd8);
+    Or(a = y8b, b = c7, out = yd8);
+    Or(a = x8b, b = c7, out =zd8);
+    And(a = c7, b = xd8, out = cx8);
+    And(a = x8b, b = yd8, out = ay8);    
+    And(a = y8b, b = zd8, out = bz8); 
+    Or(a = cx8, b = ay8, out = ortemp8);
+    Or(a = ortemp8, b = bz8, out = c8);
+
+    Xor(a = x8b, b = y8b, out = sum1a8);
+    Xor(a = sum1a8, b = c7, out = addout8);   
+    //And
+    And(a = x8b, b = y8b, out = andout8);
+          
+    Or(a = x9b, b = y9b, out = xd9);
+    Or(a = y9b, b = c8, out = yd9);
+    Or(a = x9b, b = c8, out =zd9);
+    And(a = c8, b = xd9, out = cx9);
+    And(a = x9b, b = yd9, out = ay9);    
+    And(a = y9b, b = zd9, out = bz9); 
+    Or(a = cx9, b = ay9, out = ortemp9);
+    Or(a = ortemp9, b = bz9, out = c9);
+
+    Xor(a = x9b, b = y9b, out = sum1a9);
+    Xor(a = sum1a9, b = c8, out = addout9);   
+    //And
+    And(a = x9b, b = y9b, out = andout9);
+          
+    Or(a = x10b, b = y10b, out = xd10);
+    Or(a = y10b, b = c9, out = yd10);
+    Or(a = x10b, b = c9, out =zd10);
+    And(a = c9, b = xd10, out = cx10);
+    And(a = x10b, b = yd10, out = ay10);    
+    And(a = y10b, b = zd10, out = bz10); 
+    Or(a = cx10, b = ay10, out = ortemp10);
+    Or(a = ortemp10, b = bz10, out = c10);
+
+    Xor(a = x10b, b = y10b, out = sum1a10);
+    Xor(a = sum1a10, b = c9, out = addout10);   
+    //And
+    And(a = x10b, b = y10b, out = andout10);
+          
+    Or(a = x11b, b = y11b, out = xd11);
+    Or(a = y11b, b = c10, out = yd11);
+    Or(a = x11b, b = c10, out =zd11);
+    And(a = c10, b = xd11, out = cx11);
+    And(a = x11b, b = yd11, out = ay11);    
+    And(a = y11b, b = zd11, out = bz11); 
+    Or(a = cx11, b = ay11, out = ortemp11);
+    Or(a = ortemp11, b = bz11, out = c11);
+
+    Xor(a = x11b, b = y11b, out = sum1a11);
+    Xor(a = sum1a11, b = c10, out = addout11);   
+    //And
+    And(a = x11b, b = y11b, out = andout11);
+          
+    Or(a = x12b, b = y12b, out = xd12);
+    Or(a = y12b, b = c11, out = yd12);
+    Or(a = x12b, b = c11, out =zd12);
+    And(a = c11, b = xd12, out = cx12);
+    And(a = x12b, b = yd12, out = ay12);    
+    And(a = y12b, b = zd12, out = bz12); 
+    Or(a = cx12, b = ay12, out = ortemp12);
+    Or(a = ortemp12, b = bz12, out = c12);
+
+    Xor(a = x12b, b = y12b, out = sum1a12);
+    Xor(a = sum1a12, b = c11, out = addout12);   
+    //And
+    And(a = x12b, b = y12b, out = andout12);
+          
+    Or(a = x13b, b = y13b, out = xd13);
+    Or(a = y13b, b = c12, out = yd13);
+    Or(a = x13b, b = c12, out =zd13);
+    And(a = c12, b = xd13, out = cx13);
+    And(a = x13b, b = yd13, out = ay13);    
+    And(a = y13b, b = zd13, out = bz13); 
+    Or(a = cx13, b = ay13, out = ortemp13);
+    Or(a = ortemp13, b = bz13, out = c13);
+
+    Xor(a = x13b, b = y13b, out = sum1a13);
+    Xor(a = sum1a13, b = c12, out = addout13);   
+    //And
+    And(a = x13b, b = y13b, out = andout13);
+          
+    Or(a = x14b, b = y14b, out = xd14);
+    Or(a = y14b, b = c13, out = yd14);
+    Or(a = x14b, b = c13, out =zd14);
+    And(a = c13, b = xd14, out = cx14);
+    And(a = x14b, b = yd14, out = ay14);    
+    And(a = y14b, b = zd14, out = bz14); 
+    Or(a = cx14, b = ay14, out = ortemp14);
+    Or(a = ortemp14, b = bz14, out = c14);
+
+    Xor(a = x14b, b = y14b, out = sum1a14);
+    Xor(a = sum1a14, b = c13, out = addout14);   
+    //And
+    And(a = x14b, b = y14b, out = andout14);
+          
+    Or(a = x15b, b = y15b, out = xd15);
+    Or(a = y15b, b = c14, out = yd15);
+    Or(a = x15b, b = c14, out =zd15);
+    And(a = c14, b = xd15, out = cx15);
+    And(a = x15b, b = yd15, out = ay15);    
+    And(a = y15b, b = zd15, out = bz15); 
+    Or(a = cx15, b = ay15, out = ortemp15);
+    Or(a = ortemp15, b = bz15, out = c15);
+
+    Xor(a = x15b, b = y15b, out = sum1a15);
+    Xor(a = sum1a15, b = c14, out = addout15);   
+    //And
+    And(a = x15b, b = y15b, out = andout15);
+//*****
+
+    Mux(a = andout0, b = addout0, sel = f, out = outprime0);
+
+    Mux(a = andout1, b = addout1, sel = f, out = outprime1);
+          
+    Mux(a = andout2, b = addout2, sel = f, out = outprime2);
+          
+    Mux(a = andout3, b = addout3, sel = f, out = outprime3);
+          
+    Mux(a = andout4, b = addout4, sel = f, out = outprime4);
+          
+    Mux(a = andout5, b = addout5, sel = f, out = outprime5);
+          
+    Mux(a = andout6, b = addout6, sel = f, out = outprime6);
+          
+    Mux(a = andout7, b = addout7, sel = f, out = outprime7);
+          
+    Mux(a = andout8, b = addout8, sel = f, out = outprime8);
+          
+    Mux(a = andout9, b = addout9, sel = f, out = outprime9);
+          
+    Mux(a = andout10, b = addout10, sel = f, out = outprime10);
+          
+    Mux(a = andout11, b = addout11, sel = f, out = outprime11);
+          
+    Mux(a = andout12, b = addout12, sel = f, out = outprime12);
+          
+    Mux(a = andout13, b = addout13, sel = f, out = outprime13);
+          
+    Mux(a = andout14, b = addout14, sel = f, out = outprime14);
+          
+    Mux(a = andout15, b = addout15, sel = f, out = outprime15);
+//******
+    Not(in = outprime0, out = notoutprime0);
+    Mux(a = outprime0, b = notoutprime0, sel = no, out = out[0]);
+    Mux(a = outprime0, b = notoutprime0, sel = no, out = outval0);
+
+    Not(in = outprime1, out = notoutprime1);
+    Mux(a = outprime1, b = notoutprime1, sel = no, out = out[1]);
+    Mux(a = outprime1, b = notoutprime1, sel = no, out = outval1);
+
+    Not(in = outprime2, out = notoutprime2);
+    Mux(a = outprime2, b = notoutprime2, sel = no, out = out[2]);
+    Mux(a = outprime2, b = notoutprime2, sel = no, out = outval2);
+
+    Not(in = outprime3, out = notoutprime3);
+    Mux(a = outprime3, b = notoutprime3, sel = no, out = out[3]);
+    Mux(a = outprime3, b = notoutprime3, sel = no, out = outval3);
+
+    Not(in = outprime4, out = notoutprime4);
+    Mux(a = outprime4, b = notoutprime4, sel = no, out = out[4]);
+    Mux(a = outprime4, b = notoutprime4, sel = no, out = outval4);
+
+    Not(in = outprime5, out = notoutprime5);
+    Mux(a = outprime5, b = notoutprime5, sel = no, out = out[5]);
+    Mux(a = outprime5, b = notoutprime5, sel = no, out = outval5);
+
+    Not(in = outprime6, out = notoutprime6);
+    Mux(a = outprime6, b = notoutprime6, sel = no, out = out[6]);
+    Mux(a = outprime6, b = notoutprime6, sel = no, out = outval6);
+
+    Not(in = outprime7, out = notoutprime7);
+    Mux(a = outprime7, b = notoutprime7, sel = no, out = out[7]);
+    Mux(a = outprime7, b = notoutprime7, sel = no, out = outval7);
+
+    Not(in = outprime8, out = notoutprime8);
+    Mux(a = outprime8, b = notoutprime8, sel = no, out = out[8]);
+    Mux(a = outprime8, b = notoutprime8, sel = no, out = outval8);
+
+    Not(in = outprime9, out = notoutprime9);
+    Mux(a = outprime9, b = notoutprime9, sel = no, out = out[9]);
+    Mux(a = outprime9, b = notoutprime9, sel = no, out = outval9);
+
+    Not(in = outprime10, out = notoutprime10);
+    Mux(a = outprime10, b = notoutprime10, sel = no, out = out[10]);
+    Mux(a = outprime10, b = notoutprime10, sel = no, out = outval10);
+
+    Not(in = outprime11, out = notoutprime11);
+    Mux(a = outprime11, b = notoutprime11, sel = no, out = out[11]);
+    Mux(a = outprime11, b = notoutprime11, sel = no, out = outval11);
+
+    Not(in = outprime12, out = notoutprime12);
+    Mux(a = outprime12, b = notoutprime12, sel = no, out = out[12]);
+    Mux(a = outprime12, b = notoutprime12, sel = no, out = outval12);
+
+    Not(in = outprime13, out = notoutprime13);
+    Mux(a = outprime13, b = notoutprime13, sel = no, out = out[13]);
+    Mux(a = outprime13, b = notoutprime13, sel = no, out = outval13);
+
+    Not(in = outprime14, out = notoutprime14);
+    Mux(a = outprime14, b = notoutprime14, sel = no, out = out[14]);
+    Mux(a = outprime14, b = notoutprime14, sel = no, out = outval14);
+
+    Not(in = outprime15, out = notoutprime15);
+    Mux(a = outprime15, b = notoutprime15, sel = no, out = out[15]);
+    Mux(a = outprime15, b = notoutprime15, sel = no, out = outval15);
+    
+    Or( a = outval0, b = outval1, out = r1or1);
+    Or( a = outval2, b = outval3, out = r1or2);
+    Or( a = outval4, b = outval5, out = r1or3);
+    Or( a = outval6, b = outval7, out = r1or4);
+    Or( a = outval8, b = outval9, out = r1or5);
+    Or( a = outval10, b = outval11, out = r1or6);
+    Or( a = outval12, b = outval13, out = r1or7);
+    Or( a = outval14, b = outval15, out = r1or8);
+    
+    Or( a = r1or1, b = r1or2, out = r2or1);
+    Or( a = r1or3, b = r1or4, out = r2or2);
+    Or( a = r1or5, b = r1or6, out = r2or3);
+    Or( a = r1or7, b = r1or8, out = r2or4);
+
+    Or( a = r2or1, b = r2or2, out = r3or1);
+    Or( a = r2or3, b = r2or4, out = r3or2);  
+
+    Or( a = r3or1, b = r3or2, out = r4or1);
+
+    Mux(a = true, b = false, sel = r4or1, out = zr);
+    Mux(a = false, b = true, sel = outval15, out = ng);
+
+}

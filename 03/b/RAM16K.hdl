@@ -1,0 +1,70 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/03/b/RAM16K.hdl
+
+/**
+ * Memory of 16K registers, each 16 bit-wide. Out holds the value
+ * stored at the memory location specified by address. If load==1, then 
+ * the in value is loaded into the memory location specified by address 
+ * (the loaded value will be emitted to out from the next time step onward).
+ */
+
+CHIP RAM16K {
+    IN in[16], load, address[14];
+    OUT out[16];
+
+    PARTS:
+    // Put your code here:
+    DMux4Way(in = load, sel[0] = address[9], sel[1] = address[10], a = w, b = x, c = y, d = z);
+    DMux8Way(in = w, sel[0] = address[11], sel[1] = address[12], sel[2] = address[13], a = a1 ,b = b1 ,c = c1 ,d = d1 ,e = e1 ,f = f1 ,g = g1,h = h1);
+    DMux8Way(in = x, sel[0] = address[11], sel[1] = address[12], sel[2] = address[13], a = a1b ,b = b1b ,c = c1b ,d = d1b ,e = e1b ,f = f1b ,g = g1b,h = h1b);
+    DMux8Way(in = y, sel[0] = address[11], sel[1] = address[12], sel[2] = address[13], a = a1c ,b = b1c ,c = c1c ,d = d1c ,e = e1c ,f = f1c ,g = g1c,h = h1c);
+    DMux8Way(in = z, sel[0] = address[11], sel[1] = address[12], sel[2] = address[13], a = a1d ,b = b1d ,c = c1d ,d = d1d ,e = e1d ,f = f1d ,g = g1d,h = h1d);
+
+    RAM512(load = a1, in = in, address[0] = address[0], address[1] = address[1], address[2] = address[2],address[3] = address[3], address[4] = address[4], address[5] = address[5],address[6] = address[6], address[7] = address[7], address[8] = address[8],out = out1);
+    RAM512(load = b1, in = in, address[0] = address[0], address[1] = address[1], address[2] = address[2],address[3] = address[3], address[4] = address[4], address[5] = address[5],address[6] = address[6], address[7] = address[7], address[8] = address[8], out = out2);
+    RAM512(load = c1, in = in, address[0] = address[0], address[1] = address[1], address[2] = address[2],address[3] = address[3], address[4] = address[4], address[5] = address[5],address[6] = address[6], address[7] = address[7], address[8] = address[8], out = out3);
+    RAM512(load = d1, in = in, address[0] = address[0], address[1] = address[1], address[2] = address[2],address[3] = address[3], address[4] = address[4], address[5] = address[5],address[6] = address[6], address[7] = address[7], address[8] = address[8], out = out4);
+    RAM512(load = e1, in = in, address[0] = address[0], address[1] = address[1], address[2] = address[2],address[3] = address[3], address[4] = address[4], address[5] = address[5],address[6] = address[6], address[7] = address[7], address[8] = address[8], out = out5);
+    RAM512(load = f1, in = in, address[0] = address[0], address[1] = address[1], address[2] = address[2],address[3] = address[3], address[4] = address[4], address[5] = address[5],address[6] = address[6], address[7] = address[7], address[8] = address[8], out = out6);
+    RAM512(load = g1, in = in, address[0] = address[0], address[1] = address[1], address[2] = address[2],address[3] = address[3], address[4] = address[4], address[5] = address[5],address[6] = address[6], address[7] = address[7], address[8] = address[8], out = out7);
+    RAM512(load = h1, in = in, address[0] = address[0], address[1] = address[1], address[2] = address[2],address[3] = address[3], address[4] = address[4], address[5] = address[5],address[6] = address[6], address[7] = address[7], address[8] = address[8], out =out8);
+
+
+    RAM512(load = a1b, in = in, address[0] = address[0], address[1] = address[1], address[2] = address[2],address[3] = address[3], address[4] = address[4], address[5] = address[5],address[6] = address[6], address[7] = address[7], address[8] = address[8],out = out1b);
+    RAM512(load = b1b, in = in, address[0] = address[0], address[1] = address[1], address[2] = address[2],address[3] = address[3], address[4] = address[4], address[5] = address[5],address[6] = address[6], address[7] = address[7], address[8] = address[8], out = out2b);
+    RAM512(load = c1b, in = in, address[0] = address[0], address[1] = address[1], address[2] = address[2],address[3] = address[3], address[4] = address[4], address[5] = address[5],address[6] = address[6], address[7] = address[7], address[8] = address[8], out = out3b);
+    RAM512(load = d1b, in = in, address[0] = address[0], address[1] = address[1], address[2] = address[2],address[3] = address[3], address[4] = address[4], address[5] = address[5],address[6] = address[6], address[7] = address[7], address[8] = address[8], out = out4b);
+    RAM512(load = e1b, in = in, address[0] = address[0], address[1] = address[1], address[2] = address[2],address[3] = address[3], address[4] = address[4], address[5] = address[5],address[6] = address[6], address[7] = address[7], address[8] = address[8], out = out5b);
+    RAM512(load = f1b, in = in, address[0] = address[0], address[1] = address[1], address[2] = address[2],address[3] = address[3], address[4] = address[4], address[5] = address[5],address[6] = address[6], address[7] = address[7], address[8] = address[8], out = out6b);
+    RAM512(load = g1b, in = in, address[0] = address[0], address[1] = address[1], address[2] = address[2],address[3] = address[3], address[4] = address[4], address[5] = address[5],address[6] = address[6], address[7] = address[7], address[8] = address[8], out = out7b);
+    RAM512(load = h1b, in = in, address[0] = address[0], address[1] = address[1], address[2] = address[2],address[3] = address[3], address[4] = address[4], address[5] = address[5],address[6] = address[6], address[7] = address[7], address[8] = address[8], out =out8b);
+
+
+    RAM512(load = a1c, in = in, address[0] = address[0], address[1] = address[1], address[2] = address[2],address[3] = address[3], address[4] = address[4], address[5] = address[5],address[6] = address[6], address[7] = address[7], address[8] = address[8],out = out1c);
+    RAM512(load = b1c, in = in, address[0] = address[0], address[1] = address[1], address[2] = address[2],address[3] = address[3], address[4] = address[4], address[5] = address[5],address[6] = address[6], address[7] = address[7], address[8] = address[8], out = out2c);
+    RAM512(load = c1c, in = in, address[0] = address[0], address[1] = address[1], address[2] = address[2],address[3] = address[3], address[4] = address[4], address[5] = address[5],address[6] = address[6], address[7] = address[7], address[8] = address[8], out = out3c);
+    RAM512(load = d1c, in = in, address[0] = address[0], address[1] = address[1], address[2] = address[2],address[3] = address[3], address[4] = address[4], address[5] = address[5],address[6] = address[6], address[7] = address[7], address[8] = address[8], out = out4c);
+    RAM512(load = e1c, in = in, address[0] = address[0], address[1] = address[1], address[2] = address[2],address[3] = address[3], address[4] = address[4], address[5] = address[5],address[6] = address[6], address[7] = address[7], address[8] = address[8], out = out5c);
+    RAM512(load = f1c, in = in, address[0] = address[0], address[1] = address[1], address[2] = address[2],address[3] = address[3], address[4] = address[4], address[5] = address[5],address[6] = address[6], address[7] = address[7], address[8] = address[8], out = out6c);
+    RAM512(load = g1c, in = in, address[0] = address[0], address[1] = address[1], address[2] = address[2],address[3] = address[3], address[4] = address[4], address[5] = address[5],address[6] = address[6], address[7] = address[7], address[8] = address[8], out = out7c);
+    RAM512(load = h1c, in = in, address[0] = address[0], address[1] = address[1], address[2] = address[2],address[3] = address[3], address[4] = address[4], address[5] = address[5],address[6] = address[6], address[7] = address[7], address[8] = address[8], out =out8c);
+
+
+    RAM512(load = a1d, in = in, address[0] = address[0], address[1] = address[1], address[2] = address[2],address[3] = address[3], address[4] = address[4], address[5] = address[5],address[6] = address[6], address[7] = address[7], address[8] = address[8],out = out1d);
+    RAM512(load = b1d, in = in, address[0] = address[0], address[1] = address[1], address[2] = address[2],address[3] = address[3], address[4] = address[4], address[5] = address[5],address[6] = address[6], address[7] = address[7], address[8] = address[8], out = out2d);
+    RAM512(load = c1d, in = in, address[0] = address[0], address[1] = address[1], address[2] = address[2],address[3] = address[3], address[4] = address[4], address[5] = address[5],address[6] = address[6], address[7] = address[7], address[8] = address[8], out = out3d);
+    RAM512(load = d1d, in = in, address[0] = address[0], address[1] = address[1], address[2] = address[2],address[3] = address[3], address[4] = address[4], address[5] = address[5],address[6] = address[6], address[7] = address[7], address[8] = address[8], out = out4d);
+    RAM512(load = e1d, in = in, address[0] = address[0], address[1] = address[1], address[2] = address[2],address[3] = address[3], address[4] = address[4], address[5] = address[5],address[6] = address[6], address[7] = address[7], address[8] = address[8], out = out5d);
+    RAM512(load = f1d, in = in, address[0] = address[0], address[1] = address[1], address[2] = address[2],address[3] = address[3], address[4] = address[4], address[5] = address[5],address[6] = address[6], address[7] = address[7], address[8] = address[8], out = out6d);
+    RAM512(load = g1d, in = in, address[0] = address[0], address[1] = address[1], address[2] = address[2],address[3] = address[3], address[4] = address[4], address[5] = address[5],address[6] = address[6], address[7] = address[7], address[8] = address[8], out = out7d);
+    RAM512(load = h1d, in = in, address[0] = address[0], address[1] = address[1], address[2] = address[2],address[3] = address[3], address[4] = address[4], address[5] = address[5],address[6] = address[6], address[7] = address[7], address[8] = address[8], out =out8d);
+
+
+    Mux8Way16(a = out1, b = out2, c = out3, d = out4, e = out5, f = out6, g = out7, h = out8, sel[0] = address[11], sel[1] = address[12], sel[2] = address[13], out = outw);
+    Mux8Way16(a = out1b, b = out2b, c = out3b, d = out4b, e = out5b, f = out6b, g = out7b, h = out8b, sel[0] = address[11], sel[1] = address[12], sel[2] = address[13], out = outx);
+    Mux8Way16(a = out1c, b = out2c, c = out3c, d = out4c, e = out5c, f = out6c, g = out7c, h = out8c, sel[0] = address[11], sel[1] = address[12], sel[2] = address[13], out = outy);
+    Mux8Way16(a = out1d, b = out2d, c = out3d, d = out4d, e = out5d, f = out6d, g = out7d, h = out8d, sel[0] = address[11], sel[1] = address[12], sel[2] = address[13], out = outz);
+    Mux4Way16(a = outw, b = outx, c = outy, d = outz, sel[0] = address[9], sel[1] = address[10], out = out);
+}
