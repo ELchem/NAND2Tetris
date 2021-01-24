@@ -1,0 +1,91 @@
+                                                                                                                                          // This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/01/Or8Way.hdl
+
+/**
+ * 8-way Or: 
+ * out = (in[0] or in[1] or ... or in[7])
+ */
+
+CHIP Or8Way {
+    IN in[8];
+    OUT out;
+
+    PARTS:
+    // Or == Not(And(Not(a),Not(b))
+    // Put your code here:
+    
+    Nand(a=in[0],b=in[0],out=nota1);
+    Nand(a=in[1], b=in[1], out=notb1);
+    
+    Nand(a=nota1, b=notb1, out=o1); 
+    Nand(a=nota1, b=notb1, out=o2);
+    Nand(a=o1, b=o2, out=notout01);
+
+    Nand(a=notout01, b=notout01, out=out01);
+
+    Nand(a=in[2],b=in[2],out=nota2);
+    Nand(a=in[3], b=in[3], out=notb2);
+    
+    Nand(a=nota2, b=notb2, out=o3); 
+    Nand(a=nota2, b=notb2, out=o4);
+    Nand(a=o3, b=o4, out=notout23);
+
+    Nand(a=notout23, b=notout23, out=out23);
+
+    Nand(a=in[4],b=in[4],out=nota3);
+    Nand(a=in[5], b=in[5], out=notb3);
+    
+    Nand(a=nota3, b=notb3, out=o5); 
+    Nand(a=nota3, b=notb3, out=o6);
+    Nand(a=o5, b=o6, out=notout45);
+
+    Nand(a=notout45, b=notout45, out=out45);
+
+    Nand(a=in[6],b=in[6],out=nota4);
+    Nand(a=in[7], b=in[7], out=notb4);
+    
+    Nand(a=nota4, b=notb4, out=o7); 
+    Nand(a=nota4, b=notb4, out=o8);
+    Nand(a=o7, b=o8, out=notout67);
+
+    Nand(a=notout67, b=notout67, out=out67);
+
+    //Or(out01,out23)
+    Nand(a=out01,b=out01,out=nota01);
+    Nand(a=out23, b=out23, out=notb23);
+    
+    Nand(a=nota01, b=notb23, out=o9); 
+    Nand(a=nota01, b=notb23, out=o10);
+    Nand(a=o9, b=o10, out=notout910);
+
+    Nand(a=notout910, b=notout910, out=out910);
+
+    //Or(out45, out67)
+    Nand(a=out45,b=out45,out=nota45);
+    Nand(a=out67, b=out67, out=notb45);
+    
+    Nand(a=nota45, b=notb45, out=o11); 
+    Nand(a=nota45, b=notb45, out=o12);
+    Nand(a=o11, b=o12, out=notout1112);
+
+    Nand(a=notout1112, b=notout1112, out=out1112);
+
+    //Or(out910,out1112)
+    Nand(a=out910,b=out910,out=nota910);
+    Nand(a=out1112, b=out1112, out=notb1112);
+    
+    Nand(a=nota910, b=notb1112, out=o13); 
+    Nand(a=nota910, b=notb1112, out=o14);
+    Nand(a=o13, b=o14, out=notout1314);
+
+    Nand(a=notout1314, b=notout1314, out=out);
+
+
+    
+
+
+
+
+}
